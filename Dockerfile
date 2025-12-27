@@ -7,9 +7,6 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Install ast-grep
-RUN curl -Ls https://github.com/ast-grep/ast-grep/releases/download/0.11.0/ast-grep-x86_64-unknown-linux-gnu.tar.gz | tar -xz -C /usr/local/bin
-
 # Set working directory
 WORKDIR /app
 

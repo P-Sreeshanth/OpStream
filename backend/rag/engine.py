@@ -19,12 +19,25 @@ class RAGEngine:
     COLLECTION_NAME = "repo_docs"
     EMBEDDING_DIM = 384  # all-MiniLM-L6-v2 dimension
     
-    def __init__(self, qdrant_location: str = ":memory:"):
+    def __init__(self):
         logger.info("[RAG] Initializing embedding model...")
         self.embedder = SentenceTransformer('all-MiniLM-L6-v2')
         
         logger.info("[RAG] Connecting to Qdrant...")
-        self.client = QdrantClient(location=qdrant_location)
+        
+        # Read Qdrant Cloud settings from environment
+        qdrant_url = os.getenv("QDRANT_URL")
+        qdrant_api_key = os.getenv("QDRANT_API_KEY")
+        
+        if qdrant_url and qdrant_api_key:
+            # Use Qdrant Cloud
+            logger.info(f"[RAG] Using Qdrant Cloud: {qdrant_url[:50]}...")
+            self.client = QdrantClient(url=qdrant_url, api_key=qdrant_api_key)
+        else:
+            # Fallback to in-memory for local development
+            logger.info("[RAG] Using in-memory Qdrant (no QDRANT_URL set)")
+            self.client = QdrantClient(location=":memory:")
+        
         self._init_collection()
         
         # LLM config for HyDE

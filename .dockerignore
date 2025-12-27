@@ -1,0 +1,32 @@
+# Git
+.git
+.gitignore
+
+# Python
+.venv
+__pycache__
+*.pyc
+*.pyo
+*.egg-info
+.pytest_cache
+
+# Node/Frontend (not needed for backend)
+frontend/node_modules
+frontend/dist
+frontend/.vite
+
+# Environment
+.env
+.env.local
+
+# IDE
+.vscode
+.idea
+
+# Docs
+*.md
+!requirements.txt
+
+# Cache
+.cache
+*.log
